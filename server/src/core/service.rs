@@ -1,4 +1,5 @@
 use super::model::{Role, Permission, Access};
+use std::sync::Arc;
 
 pub fn find_roles() -> Vec<Role> {
     let roles = vec![
@@ -28,13 +29,13 @@ pub fn find_role(id: u32) -> Role {
 }
 
 pub struct Service {
-    pub permissions: Vec<Permission>,
+    pub permissions: Arc<Vec<Permission>>,
     pub roles: Vec<Role>,
 }
 
 impl Service {
     pub fn new() -> Service {
-        let permissions = vec![
+        let permissions = Arc::new(vec![
             Permission { id: 1, resource: String::from("ROLE"), access: Access::READ },
             Permission { id: 2, resource: String::from("ROLE"), access: Access::CREATE },
             Permission { id: 3, resource: String::from("ROLE"), access: Access::UPDATE },
@@ -43,7 +44,7 @@ impl Service {
             Permission { id: 6, resource: String::from("USER"), access: Access::CREATE },
             Permission { id: 7, resource: String::from("USER"), access: Access::UPDATE },
             Permission { id: 8, resource: String::from("USER"), access: Access::DELETE },
-        ];
+        ]);
         let roles = vec![
             Role {
                 id: 1,

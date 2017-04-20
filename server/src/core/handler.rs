@@ -1,12 +1,12 @@
 use super::model::{Permission, Role};
 use super::service;
-use std::rc::Rc;
+use std::sync::Arc;
 use rocket::State;
 use rocket_contrib::JSON;
 
 #[get("/core/permission")]
-pub fn get_permissions(service: State<service::Service>) -> JSON<Vec<Permission>> {
-    return JSON(service.permissions);
+pub fn get_permissions(service: State<service::Service>) -> JSON<Arc<Vec<Permission>>> {
+    return JSON(service.permissions.clone());
 }
 
 #[get("/core/role")]
